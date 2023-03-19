@@ -1,57 +1,53 @@
-namespace DefaultNamespace
+using System.Collections;
+using DefaultNamespace.EventObjects;
+using UnityEngine;
+
+public class ButtonEventController : MonoBehaviour
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using DefaultNamespace.EventObjects;
-    using UnityEngine;
+    [SerializeField] private string _playerTag = "Player";
+    [SerializeField] private MovingPlatform _platform;
 
-    public class ButtonEventController : MonoBehaviour
+    private Renderer _renderer;
+    private bool _isMoving;
+
+    private void Start()
     {
-        [SerializeField] private string _playerTag = "Player";
-        [SerializeField] private MovingPlatform _platform;
+        _renderer = gameObject.GetComponentInChildren<Renderer>();
+    }
 
-        private Renderer _renderer;
-        private bool _isMoving;
+    private void OnTriggerEnter(Collider other)
+    {
+        // if (_isMoving) return;
+        if (other.gameObject.tag != _playerTag) return;
 
-        private void Start()
-        {
-            _renderer = gameObject.GetComponentInChildren<Renderer>();
-        }
+        SetButtonColor(Color.red);
+        // StartCoroutine(Moving());
+    }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            // if (_isMoving) return;
-            if (other.gameObject.tag != _playerTag) return;
+    private void OnTriggerExit(Collider other)
+    {
+        if (_isMoving) return;
+        if (other.gameObject.tag != _playerTag) return;
 
-            SetButtonColor(Color.red);
-            // StartCoroutine(Moving());
-        }
+        SetButtonColor(Color.blue);
+        StartCoroutine(Moving());
+    }
 
-        private void OnTriggerExit(Collider other)
-        {
-            if (_isMoving) return;
-            if (other.gameObject.tag != _playerTag) return;
+    IEnumerator Moving()
+    {
+        _isMoving = true;
+        yield return new WaitForSeconds(0.3f);
+        _isMoving = false;
+    }
 
-            SetButtonColor(Color.blue);
-            StartCoroutine(Moving());
-        }
+    private void OnTriggerStay(Collider other)
+    {
+        _platform.Move();
+    }
 
-        IEnumerator Moving()
-        {
-            _isMoving = true;
-            yield return new WaitForSeconds(0.3f);
-            _isMoving = false;
-        }
-
-        private void OnTriggerStay(Collider other)
-        {
-            _platform.Move();
-        }
-
-        private void SetButtonColor(Color color)
-        {
-            if (_renderer == null) return;
-            _renderer.material.SetColor("_Color", color);
-        }
+    private void SetButtonColor(Color color)
+    {
+        if (_renderer == null) return;
+        _renderer.material.SetColor("_Color", color);
     }
 }

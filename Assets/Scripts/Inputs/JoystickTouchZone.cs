@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DefaultNamespace.Inputs
@@ -10,9 +11,10 @@ namespace DefaultNamespace.Inputs
         [SerializeField] private Image _joystickHandle;
 
         private Vector2 _currentDirection;
-
+        
         public Vector2 CurrentDirection => _currentDirection;
-
+        
+        
         public void OnBeginDrag(PointerEventData eventData)
         {
             ShowControls();
@@ -61,7 +63,6 @@ namespace DefaultNamespace.Inputs
 
             _currentDirection = Vector2.ClampMagnitude(localPosition / radius, 1f);
         }
+
     }
 }
-    
-

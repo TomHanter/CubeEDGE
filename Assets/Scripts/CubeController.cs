@@ -31,7 +31,7 @@ public class CubeController : MonoBehaviour
         _hadWallOnPreviousStep = false;
         
         var verticalComponent = Vector3.down;
-        var hasWall = BlockChecker.HasBlockInDirection(transform.position,direction);
+        var hasWall = BlockChecker.HasWallInDirection(transform.position,direction);
         if (hasWall)
         {
             verticalComponent = Vector3.up;

@@ -15,9 +15,9 @@ namespace DefaultNamespace.Inputs
             currentInput = Clamp(currentInput);
 
             var currentInputV3 = new Vector3(
-                currentInput.x,
-                0f,
-                currentInput.y
+                -currentInput.x,
+                -0f,
+                -currentInput.y
             );
             _cubeController.Move(currentInputV3);
         }

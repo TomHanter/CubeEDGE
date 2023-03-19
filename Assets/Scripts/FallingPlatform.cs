@@ -11,7 +11,7 @@ namespace DefaultNamespace.EventObjects
         
         public override void Move()
         {
-            transform.DOMove(Vector3.down * _distance, _duraction)
+            transform.DOMove(transform.position + Vector3.down * _distance, _duraction)
                 .OnComplete(OnComplete)
                 .SetDelay(_delay);
         }
