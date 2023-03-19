@@ -1,8 +1,7 @@
+using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-
-
 
 public class Button : MonoBehaviour
 {
@@ -11,15 +10,13 @@ public class Button : MonoBehaviour
  
  [SerializeField] private float _duraction = 2.0f;
  [SerializeField] private float _scaleButton = 2.0f;
- 
- public void OnPointerEnter(PointerEventData eventData)
- {
-  transform.localScale = new Vector2(1.5f, 1.5f);
- }
 
- public void OnPointerExit(PointerEventData eventData)
+ private void Start()
  {
-  transform.localScale = new Vector3(1, 1, 1);
+  _originalScale = transform.localScale;
+  _scaleTo = _originalScale * _scaleButton;
+
+  transform.DOScale(_scaleTo, _duraction).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
  }
 }
 
