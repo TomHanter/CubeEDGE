@@ -3,15 +3,13 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class GameStateManager : MonoBehaviour
+
+    public abstract class SingletonMonoBehaviour<T> : MonoBehaviour
+                              where T : SingletonMonoBehaviour<T>
     {
-        private static GameStateManager _instance;
+        private static T _instance;
         //Singltne pattern
-        public static GameStateManager Instance => _instance;
-
-        private bool _isDead = false;
-        private GameObject _player;
-
+        public static T Instance => _instance;
         private void Awake()
         {
             if (Instance != null)
@@ -20,8 +18,14 @@ namespace DefaultNamespace
                 return;
             }
             
-            _instance = this;
+            _instance = (T)this;
         }
+    }
+    
+    public class GameStateManager : SingletonMonoBehaviour<GameStateManager>
+    {
+        private bool _isDead = false;
+        private GameObject _player;
 
         private void Start()
         {
